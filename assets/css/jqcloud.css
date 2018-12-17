@@ -10,6 +10,7 @@
   line-height: normal;
   overflow: hidden;
   position: relative;
+  margin: 0 auto;
 }
 
 .jqcloud-word {
@@ -57,10 +58,10 @@
   font-size: 550%;
 }
 .jqcloud-word a {
-  color: inherit;
+  color: inherit !important;
   font-size: inherit;
   text-decoration: none;
 }
 .jqcloud-word a:hover {
-  color: #00ccff;
+  color: #ffffff !important;
 }

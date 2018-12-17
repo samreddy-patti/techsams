@@ -2,11 +2,19 @@ const nativeWindow = window;
 nativeWindow.config = {
     articles: [
         {
+            id: 7,
+            title: 'Blog code syntax highlighter with Gist',
+            date: 'Aug 1, 2018',
+            description: '',
+            pathPrefix: '/git/gist/',
+            tags: ['Github', 'Gist']
+        },
+        {
             id: 6,
             title: 'Free web hosting with Github',
             date: 'Jun 15, 2017',
             description: 'If you are planning to have a standard or static contents of your web pages and don’t need any special software (called static web hosting) there are lot providers who gives web hosting for cheaper price. For example, Amazon S3 static web hosting. Now, we don\'t need to spend any money for this. Yes, we can have a web hosting in Github without paying a single penny. This is very useful for the people who want to have a web site with static web pages like having company profile, business brochure, blog or personal profile. Use below steps to create a page in Github and map to your domain.',
-            pathPrefix: '/git/',
+            pathPrefix: '/git/web-hosting/',
             tags: ['Github', 'Web hosting']
         },
         {
@@ -17,7 +25,7 @@ nativeWindow.config = {
                 image: '',
                 details: 'Java is, primarily, an object-oriented programming language. In both object-oriented and functional languages, basic values can dynamically encapsulate program behavior. Object oriented languages have objects with methods and functional languages have functions. Java enabled functional programming from J2SE 8.'
             },
-            pathPrefix: '/java/',
+            pathPrefix: '/java/lambda/',
             tags: ['Java', 'Lambda']
         },
         /* {
