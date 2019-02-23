@@ -32,18 +32,14 @@ nativeWindow.config = {
             pathPrefix: '/java/lambda/',
             tags: ['Java', 'Lambda']
         },
-        /* {
-             id: 4,
-             title: 'Load balancer - Nginx',
-             date: 'May 23, 2015',
-             description: {
-                 image: '',
-                 details: 'Nginx is pronounced as engine-x. It is a free, open source HTTP server. Nginx is one of the fastest growing server and as of now hosts nearly 12.18% of active sites across all the domains. Unlike all other traditional servers, Nginx uses event-driven (asynchronous) architecture instead of using threads to handle requests. We can also use Nginx server as the IMAP/POP3 proxy server.'
-             },
-             path: '',
-             tags: ['Nginx', 'Load balancer']
-         },
-         {
+        {
+            id: 4,
+            title: 'Load balancer with Nginx',
+            date: 'May 23, 2015',
+            pathPrefix: '/load-balancer/nginx/',
+            tags: ['Nginx', 'Load balancer']
+        },
+        /*  {
              id: 3,
              title: 'Load balancer - Apache',
              date: 'May 13, 2015',
@@ -55,13 +51,13 @@ nativeWindow.config = {
              tags: ['Apache', 'Load balancer', 'mod_proxy']
          },
          */
-         {
-             id: 1,
-             title: 'Load balancer',
-             date: 'May 8, 2015',
-             pathPrefix: '/load-balancer/',
-             tags: ['Load balancer']
-         },
+        {
+            id: 1,
+            title: 'Load balancer',
+            date: 'May 8, 2015',
+            pathPrefix: '/load-balancer/',
+            tags: ['Load balancer']
+        },
 
     ]
 };
