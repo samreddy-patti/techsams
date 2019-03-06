@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tech Sam</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/config.js"></script>
+    <script src="/assets/js/app.js"></script>
+</head>
+<body>
+<div id="header"></div>
+
+<div class="container-fluid" id="article">
+    <div class="container max-width article-main-title p-0">
+        <h2>Single Sign-on with spring SAML</h2>
+    </div>
+    <div class="container max-width">
+        <div class="row" id="article-body">
+            <div class="border border-muted pt-3 col col-md-10 bg-white" id="articleMain">
+                <p>
+                    <b>Note</b> - Demo code is using <a href="https://projectlombok.org/" target="_blank">Project
+                    lombok</a> and please install <a href="https://projectlombok.org/" target="_blank">Project
+                    lombok</a> plug-in to your IDE to avoid errors.
+                </p>
+                <section>
+                    <h3 id="overview">Overview</h3>
+                    <p>
+                        <a href="https://en.wikipedia.org/wiki/Single_sign-on" target="_blank">Single Sign-on (SSO)</a>
+                        is an authentication process to allow users to use single credentials across multiple
+                        applications
+                        within an organization. With <a href="https://en.wikipedia.org/wiki/Single_sign-on"
+                                                        target="_blank">Single Sign-on</a>
+                        we will get below benefits.
+                    <ul>
+                        <li>
+                            Use single credentials which are defined in <a
+                                href="https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol"
+                                target="_blank">LDAP</a> server
+                        </li>
+                        <li>One time login to get access to multiple application</li>
+                        <li>Minimizes user management like - disable account, lock or unlock account and etc.</li>
+                    </ul>
+                    </p>
+                    <p>
+                        There are different protocols to support SSO authentication process. The most trendy ones are
+                        <a href="https://en.wikipedia.org/wiki/OpenID_Connect" target="_blank">OpenId connect</a> and
+                        <a href="http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html"
+                           target="_blank">SAML 2.0</a>. This article is focused on SAML 2.0. Before jumping into code
+                        lets understand some basic terminology of SAML or SSO.
+                    </p>
+                </section>
+                <section>
+                    <h3 id="how_saml_works">SSO terminology</h3>
+                    <ul class="unstyled">
+                        <li>
+                            <b>SAML</b> - Secure Assertion Markup Language(SAML) is a digitally signed XML document
+                            which includes
+                            information about user, source and destination systems which are intended to use this XML
+                            document and other information to validate the XML signature.
+                        </li>
+                        <li>
+                            <b>IDP</b> - Identity Provider (IDP) is a system who is identified the user and issued
+                            signed SAML document
+                        </li>
+                        <li>
+                            <b>SP</b> - Service provider (SP) is a system who receives the SAML XML
+                        </li>
+                        <li>
+                            <b>Metadata</b> - Is a XML document which holds information about the identity provider and
+                            service provider. <a href="https://en.wikipedia.org/wiki/SAML_Metadata" target="_blank">Metadata</a>
+                            XML is issued by identity provider when a service provider registers the application. Please
+                            note that metadata XML is a application specific file. Metadata holds entityId attribute
+                            which is unique to an application.
+                        </li>
+                        <li>
+                            <b>Success callback URL</b> - This is service provider success URL. Identity provider
+                            will use this URL to post the SAML response
+                        </li>
+                        <li>
+                            <b>IDP initiated SSO</b> - In this process a user will login into the identity provider
+                            website
+                            and tries to access the service provider resources remotely. In this case idp will initiate
+                            the request to service provider and post the SAML response to allow access to resources.
+                        </li>
+                        <li>
+                            <b>SP initiated SSO</b> - In this process a user will request to service provider to access
+                            the protected pages. The service provider will initiate the request to the identity provider
+                            to
+                            validate the user. Upon getting request the identity provider will prompt to enter the
+                            credentials if not logged in. Once login is success the identity provider will post the SAML
+                            response to the service provider.
+                        </li>
+
+                    </ul>
+                    <!--<h4>SAML elements</h4>
+                    <p>Below are few elements or components which are used in SAML XML.</p>
+                    <ul class="unstyled">
+                        <li>
+                            <b>Response</b> - Response is root element which includes SAML version, XML issue time and
+                            destination. Destination attribute is used to identity to whom this XML is intended to use.
+                        </li>
+                        <li>
+                            <b>Status</b> - Indicates the authentication status (Success of Failure).
+                        </li>
+                        <li>
+                            <b>Assertion</b> - Assertion element hols below child elements.
+                            <ul class="unstyled">
+                                <li>
+                                    <b>Issuer</b> - Details of the provider who signed the XML
+                                </li>
+                                <li><b>Signature</b> - Holds the signature and certificate used to sign the document
+                                </li>
+                                <li><b>Subject</b> - This elements holds <b>NameId</b> which is login-id used to login
+                                    into
+                                    the system
+                                </li>
+                                <li><b>AudienceRestriction</b> - Holds the list of audience who all can use this XML
+                                </li>
+                                <li><b>AuthnStatement</b> - Holds the session validity time</li>
+                                <li><b>AttributeStatement</b> - Holds the list of user profile attributes like
+                                    FirstName,
+                                    LastName, EmployeeNumber and etc.
+                                </li>
+                            </ul>
+                    </ul>-->
+                </section>
+                <section>
+                    <h3 id="spring_saml">Spring SAML</h3>
+                    <p>
+                        Spring provides below two artifacts to handle SAML 2.0.
+                    <p>
+                        <b>spring-security-saml2-core</b> - saml2 core is an extension of Spring security to support
+                        basic SAML processing for single sign-on.
+                    </p>
+                    <p>
+                        <b>spring-security-saml-dsl-core</b> - saml dsl is used along with saml 2 core which holds basic
+                        configuration for request mapping, filter and authentication provider configuration.
+                    </p>
+                    We can use saml2 core alone, but we need to configure request mapping, filters and authentication,
+                    SAML
+                    context and lots of other details with are common for most of the applications. To avoid all these
+                    we
+                    just use saml dsl which makes our life simple. <i>spring-security-saml-dsl-core</i> contains below
+                    request mapping details configured by default.
+                    </p>
+
+                    <ul class="unstyled">
+                        <li>
+                            <b>/saml/metadata</b> - This mapping is used to display and read the metadata file.
+                        </li>
+                        <li>
+                            <b>/saml/login</b> - Responsible to generate the login request and redirect to IDP page for
+                            login.
+                        </li>
+                        <li>
+                            <b>/saml/logout</b> - Used to logout and clear the global or local session. Use <b>local=true</b>
+                            parameter to logout only the application session. If you don't pass this parameter, then
+                            global
+                            session will be cleared and logout from all applications which are opened in the present
+                            browser.
+                        </li>
+                        <li>
+                            <b>/saml/SSO</b> - This is success callback URL and IDP uses this request mapping to post
+                            the SAML.
+                        </li>
+                    </ul>
+
+
+                </section>
+                <section>
+                    <h3 id="idp_configuration">IDP Configuration</h3>
+                    <p>
+                        Spring SAML supports various identity providers(IDP) like ADFS, Okta, Shibboleth, OpenAM,
+                        OneLogin and others. We are going to use OneLogin IDP to demo the SAML based SSO. But the code
+                        which is shown in the demo can be used with other IDP vendors as well.
+                    </p>
+                    <h4>OneLogin registration</h4>
+                    <ol>
+                        <li>
+                            Use <a href="https://www.onelogin.com/developer-signup" target="_blank">OneLogin
+                            developer</a> portal
+                            to sign-up for a free trail.
+                        </li>
+                        <li>
+                            Upon registration use <a href="https://developers.onelogin.com/saml/java" target="_blank">link</a>
+                            and follow only <b>task 2</b> steps to register your application.
+                        </li>
+                        <li id="idp_config">Once you have added the app in portal, click on <b>Configuration</b> tab and
+                            give below details as input.
+                            <table>
+                                <tr>
+                                    <td><b>Audience</b></td>
+                                    <td>http://localhost:8080/saml/metadata</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Recipient</b></td>
+                                    <td>http://localhost:8080/saml/SSO</td>
+                                </tr>
+                                <tr>
+                                    <td><b>ACS URL validator</b></td>
+                                    <td>.*</td>
+                                </tr>
+                                <tr>
+                                    <td><b>ACS URL </b></td>
+                                    <td>http://localhost:8080/saml/SSO</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Single Logout URL </b></td>
+                                    <td>http://localhost:8080/saml/logout</td>
+                                </tr>
+                            </table>
+                            Please note that I am running an application on port 8080 with the http protocol. If you
+                            are using the different port update accordingly. Also note that the property terms may vary from
+                            provider to provider. The configuration looks like below.
+                            <p><img src="idp-register.png"></p>
+                        </li>
+                        <li id="metadata">
+                            Download the metadata file from OneLogin site. Use <b>More Action</b> link and select <b>SAML
+                            metadata</b> link to download the metadata. Copy the downloaded metadata XML into your
+                            project resource folder.
+                            <p><img src="idp-metadata.png"></p>
+                        </li>
+                    </ol>
+                </section>
+                <section>
+                    <h3 id="sp_configure">SP Configuration</h3>
+                    <ol>
+                        <li>
+                            Create Springboot maven project and add saml core and saml dsl in pom.xml.
+                            <script src="https://gist.github.com/samreddy-patti/e61ec4890c6f4f45981a599064dceab5.js?file=pom.xml"></script>
+                        </li>
+                        <li>
+                            Use Java keytool to generate self signed certificates and place the <b>keystore.jks</b> file
+                            in the resource folder.
+                            <pre class="code">
+keytool -genkey -keyalg RSA -alias onelogin -keystore keystore.jks -storepass secret -validity 360 -keysize 2048
+                            </pre>
+                        </li>
+                        <li>Place OneLogin <a href="#metadata">metadata</a> file in the resource folder which is downloaded
+                            in the previous section
+                        </li>
+                        <li>
+                            Create <b>SecurityConfig.java</b> file and add below configuration
+                            <script src="https://gist.github.com/samreddy-patti/e61ec4890c6f4f45981a599064dceab5.js?file=SecurityConfig.java"></script>
+                            <p>
+                                <b>saml()</b> is a static method returns <b>SAMLConfigurer</b> singleton instance
+                                which contains the SAML 2 request mapping, filter and authentication provider details.
+                            </p>
+                            <p>
+                                Most important part of the configuration is <b>serviceProvider()</b> section. Usually
+                                when a user successfully logged in, IDP will post a SAML response to <b>/saml/SSO</b> of
+                                service provider. Upon receiving the SAML, a service provider will validate the XML. As
+                                part of the validation, it looks for entity id, destination, audience and other details.
+                            </p>
+                            <p>
+                                For example, In our <a href="#idp_config">IDP configuration</a> section we mentioned
+                                <b>http://localhost:8080</b> domain for all sections. Hence we mentioned localhost, as
+                                part of the SAML response the XML document will contains <b>http://localhost:8080/saml/SSO</b>
+                                as the destination. When a request is posted to localhost instance, it will check for
+                                destination attribute with local instance domain. This is called intended destination.
+                                If both (SAML destination attribute and local instance name) are not matching request
+                                validation will fail.
+                            </p>
+                            <p> Above example is fine when we are testing in local or with a single instance. But in
+                                production that is not the case. We will have multiple instances on multiple nodes with
+                                the load balancer. In <a href="#idp_config">IDP configuration</a> we will give the load
+                                balancer domains instead of single node domain. In this case the SAML validation will
+                                fail because the SAML response intended destination is loadbalncer domain, but while
+                                validating the request in the instance it always compare with the present node name.
+                            </p>
+                            <p>
+                                <b>spring-security-saml2-core</b> contains two different SAML context providers to
+                                validate the SAML token. One is <b>SAMLContextProviderImpl.java</b> and another one is
+                                <b>SAMLContextProviderLB.java</b>. By default <b>spring-security-saml-dsl-core</b> uses
+                                <b>SAMLContextProviderLB.java</b> as a context provider. While validating SAML
+                                intended destination, <b>SAMLContextProviderLB.java</b> uses the configured domain
+                                instead of validating with the SAML processing node domain.
+                            </p>
+                        </li>
+                        <li>
+                            Added self signed certificate and the metadata file details in <b>application.yml</b> file.
+                            <script src="https://gist.github.com/samreddy-patti/e61ec4890c6f4f45981a599064dceab5.js?file=application.yml"></script>
+                        </li>
+                    </ol>
+                </section>
+                <section>
+                    <h3 id="flow">Process flow</h3>
+                    <img src="single-sign-on-with-spring-saml-sm.svg">
+                </section>
+                <section>
+                    <h3 id="source">Source code</h3>
+                    <p>Find the <a href="https://github.com/samreddy-patti/springboot-onelogin-sso"
+                                   target="_blank">git</a> repository for the complete code.</p>
+                </section>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

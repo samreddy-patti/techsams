@@ -2,7 +2,16 @@ const nativeWindow = window;
 nativeWindow.config = {
     articles: [
         {
-            id: 8,
+            id: 'spring_sso',
+            title: 'Single Sign-on with spring SAML',
+            date: 'Sep 18, 2018',
+            imgType: 'svg',
+            description: '',
+            pathPrefix: '/java/spring/sso/onelogin/',
+            tags: ['java', 'spring','SAML','SSO','OneLogin','Okta']
+        },
+        {
+            id: 'angular_dynamic_component',
             title: 'Load component dynamically in angular',
             date: 'Nov 18, 2017',
             description: '',
@@ -10,7 +19,7 @@ nativeWindow.config = {
             tags: ['JS', 'Angular']
         },
         {
-            id: 7,
+            id: 'gist_syntax_highlighter',
             title: 'Blog code syntax highlighter with Gist',
             date: 'Aug 1, 2018',
             description: '',
@@ -18,7 +27,7 @@ nativeWindow.config = {
             tags: ['Github', 'Gist']
         },
         {
-            id: 6,
+            id: 'git_web_hosting',
             title: 'Free web hosting with Github',
             date: 'Jun 15, 2017',
             description: 'If you are planning to have a standard or static contents of your web pages and don’t need any special software (called static web hosting) there are lot providers who gives web hosting for cheaper price. For example, Amazon S3 static web hosting. Now, we don\'t need to spend any money for this. Yes, we can have a web hosting in Github without paying a single penny. This is very useful for the people who want to have a web site with static web pages like having company profile, business brochure, blog or personal profile. Use below steps to create a page in Github and map to your domain.',
@@ -26,33 +35,21 @@ nativeWindow.config = {
             tags: ['Github', 'Web hosting']
         },
         {
-            id: 5,
+            id: 'java_lambda',
             title: 'Java 8 lambda expression',
             date: 'Jun 16, 2015',
             pathPrefix: '/java/lambda/',
             tags: ['Java', 'Lambda']
         },
         {
-            id: 4,
+            id: 'load_balancer_nginx',
             title: 'Load balancer with Nginx',
             date: 'May 23, 2015',
             pathPrefix: '/load-balancer/nginx/',
             tags: ['Nginx', 'Load balancer']
         },
-        /*  {
-             id: 3,
-             title: 'Load balancer - Apache',
-             date: 'May 13, 2015',
-             description: {
-                 image: '',
-                 details: 'Apache support load balancing through two modules i.e., mod_proxy and mod_jk. Use below comparison to choose the right module. mod_proxy - Comes by default with Apache web server. Simple to configure.This module is divided into mod_proxy_http, mod_proxy_ajp and mod_proxy_balancer sub modules mod_proxy_http - is suitable to exchange encrypted information from httpd to web/application server.'
-             },
-             path: '',
-             tags: ['Apache', 'Load balancer', 'mod_proxy']
-         },
-         */
         {
-            id: 1,
+            id: 'load_balancer_intro',
             title: 'Load balancer',
             date: 'May 8, 2015',
             pathPrefix: '/load-balancer/',

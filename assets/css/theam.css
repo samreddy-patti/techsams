@@ -1,12 +1,36 @@
+@import url('https://fonts.googleapis.com/css?family=Barlow');
+::-webkit-scrollbar {
+    width: 10px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
     line-height: 26px;
-    background-color: #F8FDF4;
+    font-size: 1rem;
+    background-color: #d2dbe0;
     min-height: 98vh;
 }
 
+#article{
+    background-color: #d2dbe0 !important;
+}
 header {
-    background-color: #49599a;
+    background-color: #344955;
     color: #ffffff !important;
 }
 
@@ -20,7 +44,7 @@ a {
 
 a:hover {
     color: #1565C0 !important;
-    text-decoration: none !important;
+    text-decoration: underline !important;
 }
 
 h3 {
@@ -29,6 +53,19 @@ h3 {
     font-size: 1.5rem;
 }
 
+#articleMain h3:before {
+    content: '';
+    border-left: 4px solid #f9aa33;
+    padding-left: 8px;
+}
+
+ol{
+    padding-left: 12px;
+}
+
+pre{
+    margin-top: 1rem;
+}
 .link:hover {
     color: #1565C0 !important;
     text-decoration: none !important;
@@ -41,7 +78,9 @@ h3 {
 .col-centered {
     margin: 0 auto;
 }
-
+.container{
+    max-width: 100% !important;
+}
 .profile-intro {
     background-image: url("../images/tech-logos.png");
     position: relative;
@@ -61,7 +100,7 @@ h3 {
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(0, 0, 0, .8);
+    background: rgba(0, 0, 0, .6);
 }
 
 .bullet {
@@ -95,14 +134,24 @@ h3 {
     position: fixed;
     z-index: 999;
     position: fixed;
-    width: 100%;
     text-align: right;
     color: white;
 
 }
 
+.blog .menu-link{
+    background-color: #f9aa33;
+    padding: 5px;
+    border-radius: 50%;
+}
 .menu-link {
     color: white;
+
+}
+
+.blog .menu-link:hover{
+   background-color: #cc7e0a;
+
 }
 
 .profile {
@@ -141,6 +190,9 @@ h3 {
     color: #FFFFFF;
 }
 
+.bg-dark{
+    background-color: #4a6572 !important;
+}
 .bg-none {
     background: none !important;
 }
@@ -157,9 +209,10 @@ h3 {
     margin-right: 4%;
 }
 
-#article-body{
-    color: #535a53;
+#article-body {
+    color: #333333;
 }
+
 #article-body img {
     margin: auto;
     max-width: 100%;
@@ -235,6 +288,10 @@ caption {
     }
 }
 
+.index-sticky-top {
+ color: #FFFFFF;
+}
+
 @media only screen and (min-width: 768px) {
     .col-4 {
         -ms-flex: 0 0 28%;
@@ -301,6 +358,10 @@ caption {
     bottom: 10%;
 }
 
+.code{
+    padding-bottom: 0px;
+    line-height: normal;
+}
 .syntax, .code {
     border: solid 1px #9D9D9D;
     background-color: white;
@@ -315,7 +376,36 @@ caption {
     display: block;
 }
 
-.badge-primary{
+.badge-primary {
     font-weight: normal;
 }
+
+.unstyled {
+    list-style: none;
+    padding-left: 0px;
+}
+
+.unstyled li {
+    padding: 4px 1px;
+}
+
+.article-main-title{
+    height: 200px;
+    text-align: center;
+    display: table;
+    /*background-color: rgba(63, 81, 181, 0.6);*/
+}
+
+.article-main-title h2{
+    vertical-align: middle;
+    display: table-cell;
+    font-family: 'Barlow', sans-serif;
+    font-size: 5vw;
+    /*color: #FFFFFF;*/
+}
+
+.max-width{
+    max-width: 100%;
+}
+
 

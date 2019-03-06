@@ -14,8 +14,8 @@
 <div class="container-fluid bg-white" id="article">
     <div class="container article-img-title p-0">
         <picture>
-            <source media="(max-width: 650px)" srcset="../web-hosting/free-web-hosting-with-github-sm.png">
-            <img src="../web-hosting/free-web-hosting-with-github.png">
+            <source media="(max-width: 650px)" srcset="blog-code-syntax-highlighter-with-gist-sm.png">
+            <img src="blog-code-syntax-highlighter-with-gist.png">
         </picture>
     </div>
     <div class="container">
@@ -24,9 +24,10 @@
                 <h3 id="context">Introduction</h3>
                 <p>
                     If you have a technical web blog it is common to write a sample snippet of code while explaining a
-                    concept. Most difficult part while inserting code is highlighting a key words and pretty printing
+                    concept. The Most difficult part while inserting code is highlighting a key words and pretty
+                    printing
                     (formatting)
-                    the code in web page. There are a lot of Javascript plug-ins to format the code. But all these
+                    the code in the web page. There are a lot of Javascript plug-ins to format the code. But all these
                     plug-ins will do
                     what it suppose to do. But the major problem with this approach is we need to include the code in
                     HTML pages. When you want to change or update the code you have to update the web page in hosted web
@@ -39,7 +40,7 @@
                 </p>
                 <h3 id="enableGist">Navigate to Gist</h3>
                 <p>
-                    If you're navigating to Gist for the first time follow below steps. Otherwise skip to next section.
+                    If you're navigating to Gist for the first time follow below steps. Otherwise, skip to next section.
                 <ol>
                     <li>Open <a href="https://github.com/" target="_blank">Github</a> and login with your account</li>
                     <li>Click on <b>+</b> sign at right corner of the site and select <b>New gist</b>. This option will
@@ -55,7 +56,7 @@
                 </p>
                 <h3 id="insertSnippet">Add snippet</h3>
                 <p>
-                    Use below steps create source file and include in web page.
+                    Use below steps to create source file and include in the web page.
                 <ol>
                     <li>Click on <b>New gist</b> option</li>
                     <li>Enter file name with extension. Extension is very important. <a target="_blank"
@@ -63,10 +64,10 @@
                         tool will highlight the syntax and format the code based on extension
                     </li>
                     <li>Add your code in code text box</li>
-                    <li>Once you are done with the code you can click on <b>Create secret gist</b> or <b>Create public
+                    <li>Once you are done with the code click on <b>Create secret gist</b> or <b>Create public
                         gist</b> button based on your preference
                     </li>
-                    <li>You can add as many files you want by clicking one <b>Add file button</b></li>
+                    <li>You can add as many files you want by clicking on <b>Add file</b> button</li>
                     <li>Once you click on create gist button, it will create the gist. Copy the embed link.
                         <img src="add-gist-snippet.png">
                     </li>
@@ -89,12 +90,11 @@
                     page from gist you can pass the file name as parameter.
                 </p>
                 <p>
-                    For example, if you have two files <i>File1.js</i> and <i>File2.js</i> in single gist. If you
-                    want to add only <i>File1.js</i>,
+                    For example, if you have two files <i>File1.js</i> and <i>File2.js</i> in single gist. Use script
+                    tag with <i>File1.js</i> as file parameter
                 <div class="syntax">
                     &lt;script src="gist embed url?file=File1.js"&gt;&lt;/script&gt;
                 </div>
-                <b>file</b> query parameter allow you to pass the file name.
                 </p>
             </div>
         </div>
