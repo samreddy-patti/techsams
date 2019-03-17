@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tech Sam</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/config.js"></script>
+    <script src="/assets/js/app.js"></script>
+</head>
+<body>
+<div id="header"></div>
+
+<div class="container-fluid bg-white" id="article">
+    <div class="container article-img-title p-0">
+        <img src="spring-Kafka-integration-with-kerberos-authentication-sm.svg">
+    </div>
+    <div class="container">
+        <div class="row" id="article-body">
+            <div class="border border-muted pt-3 col col-md-10 bg-white" id="articleMain">
+                <section>
+                    <h3 id="overview">Overview</h3>
+
+                    <p>
+                        In a distributed system, services are distributed among different systems and If a service is
+                        required to access another service over network, most convenient way to authenticate
+                        is using password-based authentication schemas. In this approach, consuming service will
+                        pass the username and password over the network to get access to required services. It means
+                        serving services are required to maintain all the consumer credentials to validate each
+                        request. Same way consumer needs to maintain the credentials to consume the services.
+                    </p>
+                    <p>
+                        <a
+                                href="https://en.wikipedia.org/wiki/Kerberos_(protocol)"
+                                target="_blank">Kerberos </a>
+                        is a computer network authentication protocol that works on the basis of tickets to allow
+                        nodes communicating over a non-secure network to prove their identity to one another in a
+                        secure manner(source: <a href="https://en.wikipedia.org/wiki/Kerberos_(protocol)"
+                                                 target="_blank">wiki</a>). <a
+                            href="https://en.wikipedia.org/wiki/Kerberos_(protocol)"
+                            target="_blank">Kerberos </a> uses token with symmetric key cryptography. <a
+                            href="https://en.wikipedia.org/wiki/Kerberos_(protocol)"
+                            target="_blank">Kerberos </a> can be used for Single Sign-0n where serving and consuming
+                        system are not required to maintain a separate set of credentials. Instead, they can use the
+                        network credentials which are used to login into the system. <a
+                            href="https://en.wikipedia.org/wiki/Kerberos_(protocol)"
+                            target="_blank">Kerberos </a> protocol is supported by most of operating systems
+                        including Windows, Solaris, Unix and Unix-like OS. Refer <a
+                            href="https://en.wikipedia.org/wiki/Kerberos_(protocol)" target="_blank">wiki</a> and <a
+                            href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/managing_smart_cards/using_kerberos"
+                            target="_blank">Redhat</a> to know how it works. There are few terms which we need to
+                        understand before it gets started.
+                    <ul class="unstyled">
+                        <li><b>Key Distribution Center(KDC)</b> is trusted third party system used to identity
+                            the system or user by principle and issues encrypted TGT(Ticket-Granting-Ticket) ticket.
+                        </li>
+                        <li><b>Authentication Server(AS)</b> - is an authentication system is part of KDC and used to
+                            validate the principle
+                        </li>
+                        <li><b>Ticket Granting Service(TGS)</b> - Once the principle is identity, KDC uses TGS to
+                            get
+                            the encrypted timestamped ticket(TGT)
+                        </li>
+                    </ul>
+                    </p>
+                </section>
+                <section>
+                    <h3 class="prerequisite">Prerequisite</h3>
+                    <p>This article limits the scope of Kafka producer configuration using
+                        <a href="https://spring.io/projects/spring-kafka" target="_blank">Spring Boot</a> and not
+                        intended to explain about Kafka server admin configuration. Use Kafka <a
+                                href="https://kafka.apache.org/quickstart" target="_blank">quick start</a> to
+                        have a kafka setup.
+
+
+                        </ul>
+                    </p>
+                </section>
+                <section>
+                    <h3 id="krbConfig">Kerberos configuration</h3>
+                    <p>
+                        This article limits the scope to explain the configuration for consumer and producer using
+                        Spring. This article is not intended to explain about Kafka configuration and will add
+                        a separate article for that.
+                    <ol>
+                        <li>
+                            Check if the consumer or provider system has Kerberos config file exist in a system. Use
+                            <i>locate</i> or <i>find</i> command to search the file. Mostly you can find it in <b>/etc/krb5</b>
+                            folder. If you find the file then skip to <a href="#step7">step 7</a>.
+                            <pre class="code bg-black text-white">
+    $ find krb5.conf
+                            </pre>
+                        </li>
+                        <li>If the file doesn't exist, create a folder <b>krb5</b> anywhere and create
+                            <b>krb5.conf</b>
+                            with below configuration.
+                            <pre class="code">
+    [libdefaults]
+    default_realm = <b>YOUR_REALM</b>
+    dns_lookup_kdc = false
+    dns_lookup_realm = false
+    ticket_lifetime = 86400
+    renew_lifetime = 604800
+    forwardable = true
+    default_tgs_enctypes = rc4-hmac aes256-cts aes128-cts
+    default_tkt_enctypes = rc4-hmac aes256-cts aes128-cts
+    permitted_enctypes = rc4-hmac aes256-cts aes128-cts
+    udp_preference_limit = 1
+    rdns = false
+    kdc_timeout=10
+    [realms]
+    <b>YOUR_REALM</b> = {
+       kdc = <b>YOUR_PRIMARY_KDC_SERVER_ADDRESS</b>
+       kdc = <b>YOUR_SECONDARY_KDC_SERVER_ADDRESS</b>
+       admin_server = <b>YOUR_KDC_ADMIN_SERVER_ADDRESS</b>
+    }
+                                </pre>
+
+                            In the above configuration, the capital bold letter needs to replace with your actual server
+                            and realm details. Other configurations like encryption algorithms ticket renew time or
+                            lifetime can adjust as you needed. If you are not sure of the above details, check with
+                            infrastructure team.
+
+                        </li>
+                        <li>
+                            Create keytab file using <b>ktutil</b> command inside <b>krb5</b> folder.
+                            <pre class="code bg-black text-white">
+    $ ktutil
+                        </pre>
+                            Command prompt will change to <i>ktutil</i>
+                        </li>
+                        <li>Add your principle, password and encryption algorithm
+                            <pre class="code bg-black text-white">
+    ktutil: addent -password -p <b>YOUR_PRINCIPLE</b> -k 1 -e rc4-hmac
+                    </pre>
+                            Enter a password when it prompts.
+                        </li>
+                        <li>
+                            Save the details into a keytab file
+                            <pre class="code bg-black text-white">
+    ktutil: wkt <b>YOUR_FILE_NAME</b>.keytab
+                        </pre>
+                        </li>
+                        <li>
+                            Quit from <b>ktutil</b> tools
+                            <pre class="code text-white bg-black">
+    ktutil: quit
+                        </pre>
+                        </li>
+                        <li id="step7">
+                            Initiate the login command to get the ticket and validate the configuration.
+                            <pre class="code bg-black text-white">
+    $ kinit
+                        </pre>
+                            Enter the principle password when it prompts.
+                        </li>
+                    </ol>
+                    </p>
+                </section>
+                <section>
+                    <h3 id="springConfig">Spring configuration</h3>
+                    <p>
+                        Add kafka dependencies in spring boot <b>pom.xml</b> file.
+                        <script src="https://gist.github.com/samreddy-patti/1dc01aa5eca3e6c9f0c3e57dc9112309.js?file=pom.xml"></script>
+                    </p>
+                    <p>
+                        Update <b>application.yml</b> with kafka configuration.
+                        <script src="https://gist.github.com/samreddy-patti/1dc01aa5eca3e6c9f0c3e57dc9112309.js?file=application.yml"></script>
+                        Kafka service name should match the service name which is configured in kafka server
+                        and replace your principle name keytab path accordingly.
+                    </p>
+                </section>
+                <section>
+                    <h3 id="source">Source code</h3>
+                    <p>
+                        Use <a href="https://github.com/samreddy-patti/spring-kafka-kerberos"
+                               target="_blank">git</a>
+                        for complete code.
+                    </p>
+                </section>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
