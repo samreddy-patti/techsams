@@ -21,77 +21,96 @@
     <div class="container">
         <div class="row" id="article-body">
             <div class="border border-muted pt-3 col col-md-10 bg-white" id="articleMain">
-                <h3 id="overview">Overview</h3>
-                <p>
-                    Before going through this article I strongly recommend you to go through <a
-                        href="/load-balancer/load-balancer.html">Load balancer</a> article to
-                    understand the basic concept of load balancer.
-                </p>
-                <p>
-                    <a href="http://nginx.org/" target="_blank">Nginx</a> is pronounced as engine-x. It is a free, open
-                    source HTTP server. They also have enterprise version. <a href="http://nginx.org/" target="_blank">Nginx</a>
-                    is one of the fastest growing server and as of now hosts nearly 12.18% of active sites across all
-                    the domains. Unlike all other traditional servers, <a href="http://nginx.org/"
-                                                                          target="_blank">Nginx</a> uses event-driven
-                    (asynchronous) architecture instead of using threads to handle requests. We can also use <a
-                        href="http://nginx.org/" target="_blank">Nginx</a>
-                    server as the IMAP/POP3 proxy server. Find more information like documentation, modules, add-ons
-                    from <a href="http://wiki.nginx.org/" target="_blank">wiki</a> link.
-                </p>
-                <h3 id="useCase">Use Case</h3>
-                <p>
-                    As part of this article I am going to explain how to use load balancer if the same application in
-                    deployed in two different instances. In this exercise we will test bellow scenarios.
-                <ul>
-                    <li>Send multiple requests and see if the load balancer distribute the load across
-                        instances
-                    </li>
-                    <li>Take out one server down and see if the requests are served from another instance</li>
-                    <li>Examine different algorithms supported by Nginx</li>
-                </ul>
-                To continue the excerse we are going to install the <a href="http://nginx.org/"
-                                                                       target="_blank">Nginx</a> HTTP server on port 80
-                and the application on two instances under port 8080 and 8081 of same node under the context path of <b>/lbtest</b>.
-                For example if you want to test the first instance use <a href="http://localhost:8080/lbtest"
-                                                                          target="_blank">http://localhost:8080/lbtest</a>
-                and
-                <a href="http://localhost:8081/lbtest" target="_blank">http://localhost:8081/lbtest</a> to process the
-                request through instance 2.</p>
-
-                <h3 id="environment">Environment setup</h3>
-                <h4>Nginx</h4>
-                <p>
-                    <a href="http://nginx.org/en/download.html" target="_blank">Download</a> the binaries from the <a
-                        href="http://nginx.org/" target="_blank">Nginx</a>
-                    web site and follow the <a href="http://wiki.nginx.org/Install" target="_blank">install</a>
-                    instructions.
-                </p>
-                <h4>Sample application</h4>
-                <p><a href="loadbalancer.jar">Download</a> the application and open two differ command terminals. Run
-                    below commands on each terminals. Make sure you installed a latest <a
-                            href="https://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">JRE</a>.
-                <pre class="syntax">
+                </section>
+                <section>
+                    <h3 id="overview">Overview</h3>
+                    <p>
+                        Before going through this article I strongly recommend you to go through <a
+                            href="/load-balancer/load-balancer.html">Load balancer</a> article to
+                        understand the basic concept of load balancer.
+                    </p>
+                    <p>
+                        <a href="http://nginx.org/" target="_blank">Nginx</a> is pronounced as engine-x. It is a free,
+                        open
+                        source HTTP server. They also have enterprise version. <a href="http://nginx.org/"
+                                                                                  target="_blank">Nginx</a>
+                        is one of the fastest growing server and as of now hosts nearly 12.18% of active sites across
+                        all
+                        the domains. Unlike all other traditional servers, <a href="http://nginx.org/"
+                                                                              target="_blank">Nginx</a> uses
+                        event-driven
+                        (asynchronous) architecture instead of using threads to handle requests. We can also use <a
+                            href="http://nginx.org/" target="_blank">Nginx</a>
+                        server as the IMAP/POP3 proxy server. Find more information like documentation, modules, add-ons
+                        from <a href="http://wiki.nginx.org/" target="_blank">wiki</a> link.
+                    </p>
+                </section>
+                <section>
+                    <h3 id="useCase">Use Case</h3>
+                    <p>
+                        As part of this article I am going to explain how to use load balancer if the same application
+                        in
+                        deployed in two different instances. In this exercise we will test bellow scenarios.
+                    <ul>
+                        <li>Send multiple requests and see if the load balancer distribute the load across
+                            instances
+                        </li>
+                        <li>Take out one server down and see if the requests are served from another instance</li>
+                        <li>Examine different algorithms supported by Nginx</li>
+                    </ul>
+                    To continue the excerse we are going to install the <a href="http://nginx.org/"
+                                                                           target="_blank">Nginx</a> HTTP server on port
+                    80
+                    and the application on two instances under port 8080 and 8081 of same node under the context path of
+                    <b>/lbtest</b>.
+                    For example if you want to test the first instance use <a href="http://localhost:8080/lbtest"
+                                                                              target="_blank">http://localhost:8080/lbtest</a>
+                    and
+                    <a href="http://localhost:8081/lbtest" target="_blank">http://localhost:8081/lbtest</a> to process
+                    the
+                    request through instance 2.</p>
+                </section>
+                <section>
+                    <h3 id="environment">Environment setup</h3>
+                    <h4>Nginx</h4>
+                    <p>
+                        <a href="http://nginx.org/en/download.html" target="_blank">Download</a> the binaries from the
+                        <a
+                                href="http://nginx.org/" target="_blank">Nginx</a>
+                        web site and follow the <a href="http://wiki.nginx.org/Install" target="_blank">install</a>
+                        instructions.
+                    </p>
+                    <h4>Sample application</h4>
+                    <p><a href="loadbalancer.jar">Download</a> the application and open two differ command terminals.
+                        Run
+                        below commands on each terminals. Make sure you installed a latest <a
+                                href="https://www.oracle.com/technetwork/java/javase/downloads/index.html"
+                                target="_blank">JRE</a>.
+                    <pre class="syntax">
 java -jar loadbalancer.jar --port=8080 name=Instance1
                 </pre>
-                <pre class="syntax">
+                    <pre class="syntax">
 java -jar loadbalancer.jar --port=8081 name=Instance2
                 </pre>
-                </p>
-                <p>
-                    open your browser and type the url <a href="http://localhost:8080/lbtest" target="_blank">http://localhost:8080/lbtest</a>.
-                    you will see <b>Welcome to Instance1....</b> message. In the same way use <a
-                        href="http://localhost:8081/lbtest" target="_blank">http://localhost:8081/lbtest</a>
-                    to see the instance2 message.
-                </p>
-                <h3 id="configure">Configure</h3>
-                <p>
-                    Configuring load balance on Nginx server is very simple. Follow below steps,
-                <ol>
+                    </p>
+                    <p>
+                        open your browser and type the url <a href="http://localhost:8080/lbtest" target="_blank">http://localhost:8080/lbtest</a>.
+                        you will see <b>Welcome to Instance1....</b> message. In the same way use <a
+                            href="http://localhost:8081/lbtest" target="_blank">http://localhost:8081/lbtest</a>
+                        to see the instance2 message.
+                    </p>
+                </section>
+                <section>
+                    <h3 id="configure">Configure</h3>
+                    <p>
+                        Configuring load balance on Nginx server is very simple. Follow below steps,
+                    <ol>
 
-                    <li>
-                        Open <b>nginx.conf</b> file from Nginx room directory by using any text editor and search for
-                        the directive <b>http</b> and add below line inside the directive.
-                        <pre class="code">
+                        <li>
+                            Open <b>nginx.conf</b> file from Nginx room directory by using any text editor and search
+                            for
+                            the directive <b>http</b> and add below line inside the directive.
+                            <pre class="code">
     ...
 	http {
         <b>include loadbalancer.conf;</b>
@@ -101,24 +120,25 @@ java -jar loadbalancer.jar --port=8081 name=Instance2
     }
     ...
                         </pre>
-                    </li>
-                    <li>We can configure load balancer in default Nginx configuration file <b>nginx.conf</b> but for
-                        best practice we are going to create a new configuration file for our application. Create <b>loadbalancer.conf</b>
-                        file under <b>conf</b> folder from the Nginx root directory.
-                    </li>
-                    <li>
-                        Open <b>loadbalancer.conf</b> file by using any text editor and add below script.
-                        <pre class="code">
+                        </li>
+                        <li>We can configure load balancer in default Nginx configuration file <b>nginx.conf</b> but for
+                            best practice we are going to create a new configuration file for our application. Create
+                            <b>loadbalancer.conf</b>
+                            file under <b>conf</b> folder from the Nginx root directory.
+                        </li>
+                        <li>
+                            Open <b>loadbalancer.conf</b> file by using any text editor and add below script.
+                            <pre class="code">
     upstream mycluster {
         server localhost:8080;
         server localhost:8081;
     }
                         </pre>
-                        Where mycluster is a name of the group or cluster. You can keep this name as you wish.
-                    </li>
-                    <li>
-                        Open <b>nginx.conf</b> file and add below script under <b>server</b> element and save.
-                        <pre class="code">
+                            Where mycluster is a name of the group or cluster. You can keep this name as you wish.
+                        </li>
+                        <li>
+                            Open <b>nginx.conf</b> file and add below script under <b>server</b> element and save.
+                            <pre class="code">
     ...
     http {
         ...
@@ -133,137 +153,166 @@ java -jar loadbalancer.jar --port=8081 name=Instance2
     ...
     }
                     </pre>
-                        <b>/lbtest</b> is a context name which is already configured in sample application. Now we can
-                        configure the load balancer to route all the requests which comes with <b>/lbtest</b> to
-                        mycluster load balancer.
-                    </li>
-                    <li>
-                        Once you are done with above mentioned configuration restart the Nginx server
-                    </li>
-                </ol>
-                That's it. we are ready with the load balancer. Now let see how to test this configuration
-                </p>
-                <h3 id="test">Test</h3>
-                <p>
-                    Hence Nginx HTTP server contains a load balancer, we need to pass the request through a load
-                    balancer. Based on algorithm, load balancer will route the request to Server 1 or Server 2. By
-                    default Nginx load balancer will use the <b>round robin</b> algorithm to choose the instance. To
-                    pass the request through load balancer open the browser and send a request to <a
-                        href="http://localhost/lbtest" target="_blank">http://localhost/lbtest</a> URL.
-                    In the first request, load balancer will choose server1 and if you refresh the browser load balancer
-                    will send the request to server2.
-                </p>
-                <h3 id="ldAlgorithms">Algorithm</h3>
-                <p>
-                    Nginx supports different kind of algorithms as mentioned below,
-                <ol>
-                    <li>Round robin</li>
-                    <li>Weighted round robin</li>
-                    <li>Least connections</li>
-                    <li>IP hash</li>
-                </ol>
-                Nginx server uses a round robin algorithm to distribute the request across the servers. We can choose
-                the best algorithm which suits for business requirement.
-                </p>
-                <h4>Weighted round robin algorithm</h4>
-                <p>
-                    The Weighted round robin algorithm works based on the weight defined to that server. For example -
-                    if you want to balance the load in 2:1 ratio between the server 1 and server 2 that means out 3
-                    request load balancer will distribute 2 requests to server 1 and 1 request to server 2. we can
-                    change the load balancer configuration like below,
-                </p>
-                <p>
-                    Open <b>loadbalncer.conf</b> file and update with below script
-                <pre class="code">
+                            <b>/lbtest</b> is a context name which is already configured in sample application. Now we
+                            can
+                            configure the load balancer to route all the requests which comes with <b>/lbtest</b> to
+                            mycluster load balancer.
+                        </li>
+                        <li>
+                            Once you are done with above mentioned configuration restart the Nginx server
+                        </li>
+                    </ol>
+                    That's it. we are ready with the load balancer. Now let see how to test this configuration
+                    </p>
+                </section>
+                <section>
+                    <h3 id="test">Test</h3>
+                    <p>
+                        Hence Nginx HTTP server contains a load balancer, we need to pass the request through a load
+                        balancer. Based on algorithm, load balancer will route the request to Server 1 or Server 2. By
+                        default Nginx load balancer will use the <b>round robin</b> algorithm to choose the instance. To
+                        pass the request through load balancer open the browser and send a request to <a
+                            href="http://localhost/lbtest" target="_blank">http://localhost/lbtest</a> URL.
+                        In the first request, load balancer will choose server1 and if you refresh the browser load
+                        balancer
+                        will send the request to server2.
+                    </p>
+                </section>
+                <section>
+                    <h3 id="ldAlgorithms">Algorithm</h3>
+                    <p>
+                        Nginx supports different kind of algorithms as mentioned below,
+                    <ol>
+                        <li>Round robin</li>
+                        <li>Weighted round robin</li>
+                        <li>Least connections</li>
+                        <li>IP hash</li>
+                    </ol>
+                    Nginx server uses a round robin algorithm to distribute the request across the servers. We can
+                    choose
+                    the best algorithm which suits for business requirement.
+                    </p>
+                    <h4>Weighted round robin algorithm</h4>
+                    <p>
+                        The Weighted round robin algorithm works based on the weight defined to that server. For example
+                        -
+                        if you want to balance the load in 2:1 ratio between the server 1 and server 2 that means out 3
+                        request load balancer will distribute 2 requests to server 1 and 1 request to server 2. we can
+                        change the load balancer configuration like below,
+                    </p>
+                    <p>
+                        Open <b>loadbalncer.conf</b> file and update with below script
+                    <pre class="code">
     upstream mycluster {
         server localhost:8080 <b>weight=2</b>;
         server localhost:8081;
     }
             </pre>
-                If you don't provide the weight of a server, by default Nginx server will take it as 1.
-                </p>
-                <h4>Least connection algorithm</h4>
-                <p>
-                    The Least connection algorithm works based on the server status. This algorithm prefers to send the
-                    request to a server which has the least connection among in the cluster. The Nginx load balancer
-                    will keep track the application server statistics to know which server has how many requests.
-                </p>
-                <p>
-                    Open <b>loadbalncer.conf</b> file and update with below script
-                <pre class="code">
+                    If you don't provide the weight of a server, by default Nginx server will take it as 1.
+                    </p>
+                    <h4>Least connection algorithm</h4>
+                    <p>
+                        The Least connection algorithm works based on the server status. This algorithm prefers to send
+                        the
+                        request to a server which has the least connection among in the cluster. The Nginx load balancer
+                        will keep track the application server statistics to know which server has how many requests.
+                    </p>
+                    <p>
+                        Open <b>loadbalncer.conf</b> file and update with below script
+                    <pre class="code">
     upstream mycluster {
         <b>least_conn;</b>
         server localhost:8080;
         server localhost:8081;
     }
             </pre>
-                </p>
-                <h4>Limiting number of connection per server</h4>
-                <p>Nginx also supports to limit the number of parallel requests that can serve by a server. We need to
-                    pass this limit per server. See script below,
-                <pre class="code">
+                    </p>
+                    <h4>Limiting number of connection per server</h4>
+                    <p>Nginx also supports to limit the number of parallel requests that can serve by a server. We need
+                        to
+                        pass this limit per server. See script below,
+                    <pre class="code">
     upstream mycluster {
         server localhost:8080 <b>max_conns=2</b>;
         server localhost:8081;
     }
             </pre>
-                As per above script, server 1 can process max 2 parallel requests.
-                </p>
-                <h3 id="backupServer">Backup server</h3>
-                <p>
-                    As part of highly available, we may need to setup a dedicated application server as backup servers
-                    to serve the request if the primary application servers are not available to serve the request. For
-                    example, imagine you want to do deployment or periodical maintenance and you don't want to serve any
-                    requests from primary servers. In this case we can setup server(s) as backup to process the client
-                    requests. See script below,
-                <pre class="code">
+                    As per above script, server 1 can process max 2 parallel requests.
+                    </p>
+                </section>
+                <section>
+                    <h3 id="backupServer">Backup server</h3>
+                    <p>
+                        As part of highly available, we may need to setup a dedicated application server as backup
+                        servers
+                        to serve the request if the primary application servers are not available to serve the request.
+                        For
+                        example, imagine you want to do deployment or periodical maintenance and you don't want to serve
+                        any
+                        requests from primary servers. In this case we can setup server(s) as backup to process the
+                        client
+                        requests. See script below,
+                    <pre class="code">
     upstream mycluster {
         server localhost:8080;
         server localhost:8081;
         <b>server localhost:8082 backup;</b>
     }
             </pre>
-                As per above script, third server is a backup or reserved server. This server will get request only if
-                the first two servers are unable to process the requests. Let's say - when server 1 is down the requests
-                will be sent to server 2 or if server 2 is down requests will be sent to server 1. If both server 1 and
-                server 2 are down then the request will be sent to server 3.
-                </p>
-                <h3 id="failoverServer">Failover servers</h3>
-                <p>
-                    In above scenario we saw how to setup a dedicated server in case primary servers are unable to
-                    process the quest. In some cases, if the primary server is unable to process the request on n number
-                    of attempts and for a while you don't want to send requests that server. We can do this through below
-                    script.
-                <pre class="code">
+                    As per above script, third server is a backup or reserved server. This server will get request only
+                    if
+                    the first two servers are unable to process the requests. Let's say - when server 1 is down the
+                    requests
+                    will be sent to server 2 or if server 2 is down requests will be sent to server 1. If both server 1
+                    and
+                    server 2 are down then the request will be sent to server 3.
+                    </p>
+                </section>
+                <section>
+                    <h3 id="failoverServer">Failover servers</h3>
+                    <p>
+                        In above scenario we saw how to setup a dedicated server in case primary servers are unable to
+                        process the quest. In some cases, if the primary server is unable to process the request on n
+                        number
+                        of attempts and for a while you don't want to send requests that server. We can do this through
+                        below
+                        script.
+                    <pre class="code">
     upstream mycluster {
         server localhost:8080 <b>max_fails=2 fail_timeout=30s</b>;
         server localhost:8081;
     }
             </pre>
-                <b>max_fails</b> - This parameter tells the count to load balance that how many attempts load balancer
-                can try to send the request. Default value is 1.
-                </p>
-                <p>
-                    <b>fail_timeout</b> - Tells how many seconds the load balancer should not try to attempt this server
-                    once it reach to max fails. By default 10 seconds.
-                </p>
-                <p>
-                    If you see above configuration, Nginx is working as a circuit breaker. If server 1 is not responding
-                    to 2 consecutive requests, the load balancer will not send the requests to server for next 30
-                    seconds.
-                </p>
-                <h3 id="session">Session stickyness</h3>
-                <p>
-                    Nginx supports session stickiness to process the request from the server which it processed
-                    previouly. By default Nginx server will not support session stickyness. We need to <a
-                        href="https://bitbucket.org/nginx-goodies/nginx-sticky-module-ng/downloads" target="_blank">download</a>
-                    a module
-                    and need to build it for you.
-                </p>
-                <p>
-                    Nginx load balancer support different ways for session stickiness like using client IP address, URL
-                    encoding or cookies. Use below script for session stickiness.
-                <pre class="code">
+                    <b>max_fails</b> - This parameter tells the count to load balance that how many attempts load
+                    balancer
+                    can try to send the request. Default value is 1.
+                    </p>
+                    <p>
+                        <b>fail_timeout</b> - Tells how many seconds the load balancer should not try to attempt this
+                        server
+                        once it reach to max fails. By default 10 seconds.
+                    </p>
+                    <p>
+                        If you see above configuration, Nginx is working as a circuit breaker. If server 1 is not
+                        responding
+                        to 2 consecutive requests, the load balancer will not send the requests to server for next 30
+                        seconds.
+                    </p>
+                </section>
+                <section>
+                    <h3 id="session">Session stickyness</h3>
+                    <p>
+                        Nginx supports session stickiness to process the request from the server which it processed
+                        previouly. By default Nginx server will not support session stickyness. We need to <a
+                            href="https://bitbucket.org/nginx-goodies/nginx-sticky-module-ng/downloads" target="_blank">download</a>
+                        a module
+                        and need to build it for you.
+                    </p>
+                    <p>
+                        Nginx load balancer support different ways for session stickiness like using client IP address,
+                        URL
+                        encoding or cookies. Use below script for session stickiness.
+                    <pre class="code">
 map $cookie_jsessionid $route_cookie {
     ~.+\.(?P\w+)$ $route;
 }
@@ -276,13 +325,17 @@ upstream mycluster {
   sticky route $route_cookie $route_uri
 }
             </pre>
-                </p>
-                <p>
-                    route=server1 and route=server2 is used to define the server names. The first map section is used to
-                    create a cookie and store the server name as a value and a second map section is used to define the
-                    query string with the key as ~jsessionid and value as the server name. Nginx will look for route id
-                    in a cookie. If the route values is not available in cookies uses URI.
-                </p>
+                    </p>
+                    <p>
+                        route=server1 and route=server2 is used to define the server names. The first map section is
+                        used to
+                        create a cookie and store the server name as a value and a second map section is used to define
+                        the
+                        query string with the key as ~jsessionid and value as the server name. Nginx will look for route
+                        id
+                        in a cookie. If the route values is not available in cookies uses URI.
+                    </p>
+                </section>
             </div>
         </div>
     </div>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tech Sam</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/config.js"></script>
+    <script src="/assets/js/app.js"></script>
+</head>
+<body>
+<div id="header"></div>
+
+<div class="container-fluid bg-white" id="article">
+    <div class="container article-img-title p-0 article-main-title" style="background-color: #dcf3ed;color: #17626f">
+        <h1>React vs Angular</h1>
+    </div>
+    <div class="container">
+        <div class="row" id="article-body">
+            <div class="border border-muted pt-3 col col-md-10 bg-white" id="articleMain">
+                <section>
+                    <h3 id="overview">Overview</h3>
+                    <p>
+                        In the market, there are tons of frameworks and libraries for front end application development
+                        and
+                        this count going up day by day. Though there are many, the most used or trendy ones are <a
+                            href="https://reactjs.org" target="_blank">React</a> and <a
+                            href="https://angular.io" target="_blank">Angular</a>. Both of these technology goals are
+                        the same but using different approaches. Choosing one of these frameworks is always challenging.
+                        There are a lot of articles on this topic explaining about up and downsides of each. I am
+                        attempting my view to compare both of these in practice. My intention is simple, before
+                        choosing anything better we should get hands-on and then decide which suits us. Let's start...
+                    </p>
+                </section>
+                <section>
+                    <h3>Trends</h3>
+                    <h5>Download Trends</h5>
+                    <p>Refer <a href="https://www.npmtrends.com/@angular/core-vs-react" target="_blank">npmtrends</a>
+                        to see the binary download trends. </p>
+                    <h5>Google search trends</h5>
+                    <p>
+                        <script type="text/javascript"
+                                src="https://ssl.gstatic.com/trends_nrtr/1754_RC01/embed_loader.js"></script>
+                        <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {
+                            "comparisonItem": [{
+                                "keyword": "React",
+                                "geo": "",
+                                "time": "today 12-m"
+                            }, {"keyword": "Angular", "geo": "", "time": "today 12-m"}], "category": 31, "property": ""
+                        }, {
+                            "exploreQuery": "cat=31&q=React,Angular&date=today 12-m,today 12-m",
+                            "guestPath": "https://trends.google.com:443/trends/embed/"
+                        }); </script>
+                        <script type="text/javascript"
+                                src="https://ssl.gstatic.com/trends_nrtr/1754_RC01/embed_loader.js"></script>
+                        <script type="text/javascript"> trends.embed.renderExploreWidget("GEO_MAP", {
+                            "comparisonItem": [{
+                                "keyword": "React",
+                                "geo": "",
+                                "time": "today 12-m"
+                            }, {"keyword": "Angular", "geo": "", "time": "today 12-m"}], "category": 31, "property": ""
+                        }, {
+                            "exploreQuery": "cat=31&q=React,Angular&date=today 12-m,today 12-m",
+                            "guestPath": "https://trends.google.com:443/trends/embed/"
+                        }); </script>
+                    </p>
+                </section>
+                <section>
+                    <h3 id="learning">Learning curve</h3>
+                    <div>
+                        <h5>React</h5>
+                        <p><a href="https://reactjs.org/" target="_blank">React</a> is a JavaScript library developed
+                            and maintained by Facebook. It uses plain JavaScript with HTML elements along with custom
+                            elements inside the Javascript called JSX. Hence it uses plain JavaScript, if you
+                            already know Javascript and HTML it is easy to understand and learn. People who are coming
+                            from .Net, Java or other backend technologies are a bit more challenging to understand the
+                            concepts. React also uses a concept called state management and we need to understand it
+                            properly. React is UI only library - that means you need to learn some other frameworks or
+                            libraries to make a proper single page application. For example,
+                        <ul>
+                            <li>
+                                <b>Routing</b> - There are lot of routing libraries in market to support routing for
+                                React.
+                                Refer <a href="https://reactjs.org/community/routing.html" target="_blank">routing</a>
+                                link
+                                for list.
+                            </li>
+                            <li>
+                                <b>State container</b> - There are different ways to maintain a state in React. <a
+                                    target="_blank" href="https://redux.js.org">Redux</a> is one for state management.
+                            </li>
+                            <li>
+                                <b>AJAX library</b> - We have freedom to choose any library to make AJAX calls. Most
+                                familiar
+                                once are - like <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API"
+                                                   target="_blank">Fetch API</a>, <a href="http://reactivex.io/"
+                                                                                     target="_blank">Rx.js</a>, <a
+                                    href="https://github.com/axios/axios" target="_blank">Axios</a>, <a
+                                    href="http://api.jquery.com/jquery.ajax/" target="_blank">JQuery</a> and <a
+                                    href="https://reactjs.org/community/data-fetching.html" target="_blank">others</a>.
+                            </li>
+                        </ul>
+                        <p>
+                            You have freedom to choose any of these libraries based on need. Which means, when you move
+                            to
+                            another project and using different combination then you have to learn that as well.
+                        </p>
+                        </p>
+                    </div>
+                    <div>
+                        <h5>Angular</h5>
+                        <p>
+                            <a href="https://angular.io/" target="_blank">Angular</a> is a framework developed and
+                            maintained by Google. It uses a set of a stack
+                            which will be common across the applications. Angular uses <a target="_blank" href="">Typescript</a>
+                            statically type programming style, in-built routing API and <a href="http://reactivex.io/"
+                                                                                           target="_blank">Rx.js</a> as
+                            AJAX API. Due to statically typed programing style, it is easy to understand the code for
+                            the people who
+                            are coming from backend technologies like .NET and Java.
+
+                            Angular uses a standard set of a stack. It means - learn Angular and use the same stack in
+                            all
+                            projects. This will minimise the effort of learning. It doesn't mean that Angular doesn't
+                            allow to choose other stacks if you like. For example, we can use <a
+                                href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" target="_blank">Fetch
+                            API</a> instead of <a href="http://reactivex.io/" target="_blank">Rx.js</a> or even we can
+                            use React as view in Angular.
+                        </p>
+                    </div>
+                </section>
+                <section>
+                    <h3 id="ide">Tools</h3>
+                    <div>
+                        <h5>IDE</h5>
+                        <p>
+                            From my knowledge and experience, most of the IDE's or editors used to program React and
+                            Angular
+                            are,
+                        <ol>
+                            <li><a href="https://www.jetbrains.com/webstorm/" target="_blank">Webstrom</a></li>
+                            <li><a href="https://code.visualstudio.com/" target="_blank">VS Code</a></li>
+                            <li><a href="https://www.sublimetext.com/" target="_blank">Sublime text</a></li>
+                            <li><a href="https://atom.io/" target="_blank">Atom</a></li>
+                        </ol>
+                        </p>
+                        <p>
+                            My preference is to use <a href="https://www.jetbrains.com/webstorm/"
+                                                       target="_blank">Webstrom</a>
+                            but it is not free. If you are looking for a free version then <a
+                                href="https://code.visualstudio.com/" target="_blank">VS Code</a> is the option. Both of
+                            these IDE's are well supported for React and Angular.
+                        </p>
+                    </div>
+                    <div>
+                        <h5>Testing</h5>
+                        <p>Use the default testing tools which comes with the frameworks instead of experimenting.</p>
+
+
+                        <p><b>React</b> - Refer <a href="https://reactjs.org/community/testing.html" target="_blank">testing</a>
+                            link
+                            to know the tools and frameworks for tesing </p>
+
+
+                        <p><b>Angular</b> - Angular uses <i>Jasmine</i> as a unit testing framework and
+                            <i>Protractor</i>
+                            as a functional testing framework. Refer <a target="_blank"
+                                                                        href="https://angular.io/guide/testing">testing</a>
+                            page for more details.
+                        </p>
+                    </div>
+                    <div>
+                        <h5>Debugging</h5>
+                        <p>
+                            Most of the browsers have it's own debugging tools which will help to debug both React and
+                            Angular applications. Apart from these, there are few other tools which will help the
+                            developers to understand the application flow and allow to change the data dynamically.
+                        </p>
+                        <p>
+                            <b>React</b> - <a href="https://github.com/facebook/react-devtools" target="_blank">React-devtools</a>
+                            extension helps to inspect component hierarchy, properties and state. There are other <a
+                                target="_blank"
+                                href="https://medium.com/@jondot/10-react-developer-tools-you-might-have-missed-6c7575cc27eb">tools</a>
+                            which can help for debugging.
+                        </p>
+                        <p><b>Angular</b> - <a href="https://augury.rangle.io/" target="_blank">Augury</a> extension for
+                            chrome and firefox browser helps to debug the applications. Refer <a
+                                    href="https://angular.io/resources" target="_blank">resources</a> page to know more
+                            tools of Angular.</p>
+                    </div>
+                </section>
+                <section>
+                    <h3 id="portability">Portability</h3>
+                    <p>
+                        The major challenge with front end components is portability. When we develop the component
+                        using
+                        one stack, we can use that component only in the same stack. For example, if
+                        you develop a button component using React we can use it only in React based application. Hence
+                        components tied to technology stack we can't reuse the component in other stacks.
+                    </p>
+                    <p>
+                        <a
+                                href="https://angular.io/guide/elements" target="_blank">Angular custom elements</a>
+                        enable
+                        a feature to run Angular components to run in React or other stacks. Angular elements are
+                        Angular
+                        components packaged as custom elements, a web standard for defining new HTML elements in a
+                        framework-agnostic way.
+                    </p>
+                </section>
+                <section>
+                    <h3 id="architecture">Architecture</h3>
+                    <p>
+                        <b>React</b> is a library which fit in view of MVC model. As explained in the <a
+                            href="#learning">learning</a> sectionIt it doesn't follow any architecture and we need to
+                        choose and design how the application architecture would be. But, React follow the component
+                        model and make sure you develop the UI components and integrate each other in a page. We will
+                        see how to do this in below sections.
+                    </p>
+                    <p>
+                        <b>Angular</b> is a framework follows MVC pattern for the application. In reality, most of the
+                        front
+                        end frameworks follow MV*. where 'C' (controller) is not used. Google described Angular as
+                        MVW(Model-View-Whatever), we can replace called View-Model(VM) in Whatever to describe Angular
+                        architecture. Refer <a href="https://angular.io/guide/architecture" target="_blank">Angular
+                        architecture</a> page to understand better. Angular uses decorator for dependency injection.
+                        Angular also follow a component model for UI elements. Each component in Angular is combined
+                        with
+                        templates, directives, pipes and services. Below diagram explains how these are tied together.
+                    </p>
+                    <p>
+                        <img src="https://angular.io/generated/images/guide/architecture/overview2.png">
+                    </p>
+                </section>
+                <section>
+                    <h3 id="handson">Hands-on</h3>
+                    <div>
+                        <h5>Create project</h5>
+                        <p>
+                            We can use online editors(<a href="https://codepen.io/" target="_blank">Codepen</a>, <a
+                                href="https://next.plnkr.co/" target="_blank">Plnkr</a> <a href="https://stackblitz.com"
+                                                                                           target="_blank">Stackblitz</a>
+                            or
+                            others)
+                            to play around Angular and React features. We can also use our local setup to run these. For
+                            local setup, React and Angular need <a href="https://nodejs.org/en/download/"
+                                                                   target="_blank">NPM</a> to
+                            manage the dependencies. <a href="https://nodejs.org/en/download/"
+                                                        target="_blank">Download</a>
+                            Node.js which includes NPM. Once you are done, make sure npm added to classpath. Use below
+                            command to verify the same.
+                        <pre class="code bg-black">
+    npm --version
+                    </pre>
+                        </p>
+
+                        <div class="row ml-2 mr-2">
+                            <div class="col-md-6 border p-0">
+                                <div class="tech-section-header">React</div>
+                                <p>
+                                    Use below command to install the react command line utility in global path. This
+                                    utility
+                                    will help to create a react application quickly.
+                                <pre class="code bg-black">
+    npm install -g create-react-app
+                            </pre>
+                                </p>
+                                <p>
+                                    Once utility is installed use below commands to create the react application.
+                                <pre class="bg-black code">
+    create-react-app react-demo
+    cd react-demo/
+                            </pre>
+                                </p>
+                                <p>
+                                    <i>create-react-app react-demo</i> command will creates a package.json with required
+                                    React
+                                    dependencies (react, react-dom, and scripts) and basic folder structure. Use below
+                                    command to run the application.
+                                <pre class="bg-black code">
+    npm start
+                            </pre>
+                                </p>
+                                <p>
+                                    Above command will start the http server on port 3000 and opens the browser.
+                                </p>
+
+                            </div>
+                            <div class="col-md-6 border p-0">
+                                <div class="tech-section-header">Angular</div>
+                                <p>
+                                    Angular has CLI which will help to generate the project, folder structure,
+                                    development,
+                                    testing, building and deployment. Install Angular CLI with below command.
+                                <pre class="code bg-black">
+    npm install -g @angular/cli
+                        </pre>
+                                </p>
+                                <p>
+                                    Create Project and folder structure
+                                <pre class="code bg-black">
+    ng new angular-demo
+    cd angular-demo
+                        </pre>
+                                </p>
+                                <p>
+                                    <i>ng new</i> command will creates project, folder structure, installs required
+                                    dependencies and configures the end to end testing with Protractor. Angular has
+                                    standard
+                                    folder structure and configuration. check Angular <a
+                                        href="https://angular.io/guide/file-structure"
+                                        target="_blank">file-structure</a> and <a
+                                        href="https://angular.io/guide/workspace-config"
+                                        target="_blank">workspace-config</a> for more information.
+                                </p>
+                                <p>
+                                    Use below command to run application
+                                <pre class="code bg-black">
+    ng serve --open
+                        </pre>
+                                </p>
+                                <p>Out of box, Angular provides mocking, proxy, unit testing, functional testing,
+                                    modularity
+                                    and so on which will help to reduce lot of setup work.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h5>Template</h5>
+                        <div class="row ml-2 mr-2">
+                            <div class="col-md-6 border p-0">
+                                <div class="tech-section-header">React</div>
+                                <p>
+                                    React uses <i>ReactDOM</i> API to render the templates. Templates are part of
+                                    Javascript
+                                    file which is called JSX(Javascript XML).
+                                    <script src="https://gist.github.com/samreddy-patti/1a5e28c587f1fc2fa3218d4720617f94.js?file=index.js"></script>
+                                    <i>ReactDOM</i> API uses a concept called <a
+                                        href="https://reactjs.org/docs/faq-internals.html" target="_blank">virtual
+                                    dom</a>
+                                    instead of using browser API to render the components. Virtual DOM will help to
+                                    render
+                                    or re-render components only when they are changed.
+                                </p>
+                            </div>
+                            <div class="col-md-6 border p-0">
+                                <div class="tech-section-header">Angular</div>
+                                <p>
+                                    Angular clearly separates the concerns. It supports two different ways for
+                                    templating. One approach is with in component
+                                    file through decorator. Another approach is create separate html file and import
+                                    into
+                                    component.
+                                </p>
+                                <p>Template part of component looks like below,
+                                    <script src="https://gist.github.com/samreddy-patti/1a5e28c587f1fc2fa3218d4720617f94.js?file=app.component.ts"></script>
+                                </p>
+                                <p>Create separate template and including in component looks like below,
+                                    <script src="https://gist.github.com/samreddy-patti/1a5e28c587f1fc2fa3218d4720617f94.js?file=message.html"></script>
+                                    <script src="https://gist.github.com/samreddy-patti/1a5e28c587f1fc2fa3218d4720617f94.js?file=app-template.component.ts"></script>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h5>Data binding</h5>
+
+                        <div class="row ml-2 mr-2">
+                            <div class="col-md-6 border p-0">
+                                <div class="tech-section-header">React</div>
+                                <p>
+                                    React uses uni-directional flow to bind the data with UI components. Data can be
+                                    updated
+                                    only with <i>this.setState()</i> method. See below demo to understand the data
+                                    binding.
+                                    Click on <b>Preview</b> button to see the UI or <a
+                                        href="https://stackblitz.com/edit/react-databinding" target="_blank">here</a> to
+                                    see
+                                    in new window
+                                    <iframe src="https://stackblitz.com/edit/react-databinding?embed=1&file=index.js&hideNavigation=1"
+                                            frameborder="0" width="100%" height="480px"></iframe>
+                                    Sometimes two way data binding also makes UI simple. For example when we are
+                                    developing
+                                    forms. React also support two way data binding using <a
+                                        href="https://reactjs.org/docs/two-way-binding-helpers.html"
+                                        target="_blank">helper</a> classes.
+                                </p>
+                                <p>
+                                    You can notice two things in above example. First, HTML <i>class</i> attribute
+                                    become <i>className</i>. Second,
+                                    <i>onChange</i> event is working differently than HTML event. According to HTML,
+                                    <i>onchange</i> should trigger when you loose the focus from input. But it is
+                                    working like as <i>oninput</i> event.
+                                </p>
+                            </div>
+                            <div class="col-md-6 border p-0">
+                                <div class="tech-section-header">Angular</div>
+                                <p>
+                                    React also support data binding in two different directions i.e., one way and two
+                                    way.
+                                    Below example is similar to react example with one way data binding. Click on
+                                    <b>Preview</b> button to see the UI or <a
+                                        href="https://stackblitz.com/edit/angular-data-one-way-binding"
+                                        target="_blank">here</a> to see
+                                    in new window
+                                    <iframe src="https://stackblitz.com/edit/angular-data-one-way-binding?embed=1&file=src/app/app.component.ts&hideNavigation=1"
+                                            frameborder="0" width="100%" height="480px"></iframe>
+                                    To sync the UI with React view, I used <i>oninput</i> event instead of
+                                    <i>onchange</i> event for input box.
+                                </p>
+                                <p>If you want two way binding use <i>[(ngModel)]</i> directive instead of
+                                    <i>[value]</i> in
+                                    <i>input</i> tag and remove <i>(input)</i> event, </p>
+                                <p>
+                                <pre class="code">
+    &lt;input class="form-control" placeholder="Enter your name" [(ngModel)]="name"/&gt;
+                        </pre>
+                                </p>
+                            </div>
+                        </div>
+                        <p>
+                            Please note that for better understanding and navigation I wrote the code in single
+                            component.
+                        </p>
+                    </div>
+                    <div>
+                        <h5>Control statements</h5>
+                        <div class="row ml-2 mr-2">
+                            <div class="col-md-6 border p-0">
+                                <div class="tech-section-header">React</div>
+                                <p>
+                                    <i>React</i> supports control states in two ways. One, using expressions along with
+                                    elements. Second, use plain Javascript to add elements conditionally. Below example
+                                    uses
+                                    expression.
+                                    <iframe src="https://stackblitz.com/edit/react-control-statement?embed=1&file=index.js&hideNavigation=1"
+                                            frameborder="0" width="100%" height="480px"></iframe>
+                                    For example if you want to use Javascript style,
+                                    <script src="https://gist.github.com/samreddy-patti/1a5e28c587f1fc2fa3218d4720617f94.js?file=react-for-loop.js"></script>
+                                </p>
+                            </div>
+                            <div class="col-md-6 border p-0">
+                                <div class="tech-section-header">Angular</div>
+                                <p>
+                                    <i>Angular</i> has separate directives to handle the template for control
+                                    statements like <i>ngIf</i>, <i>ngFor</i> and <i>ngSwitch</i>. To make UI dynamic,
+                                    Angular has special <i>ng-template</i> and <i>ng-container</i>elements. Check <a
+                                        href="https://angular.io/guide/structural-directives" target="_blank">structural-directives</a>
+                                    for more information.
+                                    <iframe src="https://stackblitz.com/edit/angular-control-statements?embed=1&file=src/app/app.component.ts&hideNavigation=1"
+                                            frameborder="0" width="100%" height="480px"></iframe>
+                                </p>
+                            </div>
+                        </div>
+                        <p>
+                            Click on <i>Preview</i> button to see the output. In above demo select <i>Married</i> check
+                            box
+                            to see
+                            the other fields conditionally. Enter dependency count to see the dependent fields.
+                        </p>
+                    </div>
+                    <div>
+                        <h5>Component communication</h5>
+                        <p>
+                            Components can communicate in two ways. One by passing input and other
+                            one is returning the value. Below demo has two components called <i>Menu</i> and <i>Body</i>.
+                            When user clicks on menu item, <i>Menu</i> component will return the page name. <i>Body</i>
+                            component will take the returned value and display the appropriate body. <i>Body</i>
+                            component will take <i>page</i> as input and <i>onMenuSelection</i> as callback for output.
+                            Click on <i>Preview</i> button to see the UI.
+                        </p>
+                        <div class="row ml-2 mr-2">
+                            <div class="col-md-6 border p-0">
+                                <div class="tech-section-header">React</div>
+                                <p>
+                                    <i>React</i> has different ways to communicate
+                                    components. Most common way is through <i>props</i>. We can use <i>props</i> to pass
+                                    the value for input and callback for output.
+                                    <iframe src="https://stackblitz.com/edit/react-component-comm?embed=1&file=index.js&hideNavigation=1"
+                                            frameborder="0" width="100%" height="480px"></iframe>
+                                </p>
+                            </div>
+                            <div class="col-md-6 border p-0">
+                                <div class="tech-section-header">Angular</div>
+                                <p>
+                                    <i>Angular</i> uses special decorators <a href="https://angular.io/api/core/Input"
+                                                                              target="_blank">Input</a> for passing
+                                    input values and <a href="https://angular.io/api/core/Output"
+                                                        target="_blank">Output</a> decorator with <a
+                                        href="https://angular.io/api/core/EventEmitter" target="_blank">EventEmitter</a>
+                                    class for output.
+                                    <iframe src="https://stackblitz.com/edit/angular-component-com?embed=1&file=src/app/app.component.ts&hideNavigation=1"
+                                            frameborder="0" width="100%" height="480px"></iframe>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <h3 id="conclusion">Conclusion</h3>
+                    <p>
+                        As mentioned before, <i>React</i> and <i>Angular</i> has its own advantage and disadvantages.
+                        Most considerable points are,
+                    </p>
+                    <p>
+                        <i>React</i> uses dynamically typed programming modal with store concepts. <i>Facebook</i>
+                        created React view library with virtual DOM to solve their specific (may be common for all web
+                        apps) problem which is displaying bulk data which can change dynamically. JSX modifies a lot of
+                        HTML elements or attributes to make it work with React. Each project has free to choose
+                        different tech stack to create a framework for an application which increases the learning curve.
+                    </p>
+                    <p>
+                        <i>Angular</i> uses statically typed programming modal with <i>Typescript</i>. This will help
+                        better understanding and maintains for large scale projects. But has lot of boilerplate code or
+                        configuration to develop components. Thanks to <i>Angular CLI</i> for minimizing a manual
+                        configuration.
+                        <i>Angular</i> elements can be used with any other frameworks which help more re-usability. <i>Angular</i>
+                        uses all HTML elements and attributes with an extra set of elements to separate Javascript and
+                        HTML. Uses a standard set of a stack which minimises the learning curve. Easy to pick for .NET and
+                        Java background people.
+                    </p>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -23,9 +23,9 @@
 
                     <p>
                         In a distributed system, services are distributed among different systems and If a service is
-                        required to access another service over network, most convenient way to authenticate
+                        required to access another service over network, the most convenient way to authenticate
                         is using password-based authentication schemas. In this approach, consuming service will
-                        pass the username and password over the network to get access to required services. It means
+                        passes the username and password over the network to get access to required services. It means
                         serving services are required to maintain all the consumer credentials to validate each
                         request. Same way consumer needs to maintain the credentials to consume the services.
                     </p>
@@ -54,18 +54,24 @@
                         <li><b>Key Distribution Center(KDC)</b> is trusted third party system used to identity
                             the system or user by principle and issues encrypted TGT(Ticket-Granting-Ticket) ticket.
                         </li>
-                        <li><b>Authentication Server(AS)</b> - is an authentication system is part of KDC and used to
+                        <li><b>Authentication Server(AS)</b> - an authentication system is part of KDC and used to
                             validate the principle
                         </li>
-                        <li><b>Ticket Granting Service(TGS)</b> - Once the principle is identity, KDC uses TGS to
+                        <li><b>Ticket Granting Service(TGS)</b> - once the principle is identity, KDC uses TGS to
                             get
                             the encrypted timestamped ticket(TGT)
                         </li>
                     </ul>
+                    Check below image for understand the flow and refer <a
+                        href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/managing_smart_cards/using_kerberos"
+                        target="_blank">Redhat</a> for explanation.
+                    </p>
+                    <p>
+                        <img src="https://access.redhat.com/webassets/avalon/d/Red_Hat_Enterprise_Linux-6-Managing_Smart_Cards-en-US/images/d314590391f06f79ad4bc8433ab5480a/kerberos.png">
                     </p>
                 </section>
                 <section>
-                    <h3 class="prerequisite">Prerequisite</h3>
+                    <h3 id="prerequisite">Prerequisite</h3>
                     <p>This article limits the scope of Kafka producer configuration using
                         <a href="https://spring.io/projects/spring-kafka" target="_blank">Spring Boot</a> and not
                         intended to explain about Kafka server admin configuration. Use Kafka <a
@@ -79,9 +85,7 @@
                 <section>
                     <h3 id="krbConfig">Kerberos configuration</h3>
                     <p>
-                        This article limits the scope to explain the configuration for consumer and producer using
-                        Spring. This article is not intended to explain about Kafka configuration and will add
-                        a separate article for that.
+
                     <ol>
                         <li>
                             Check if the consumer or provider system has Kerberos config file exist in a system. Use
@@ -91,7 +95,7 @@
     $ find krb5.conf
                             </pre>
                         </li>
-                        <li>If the file doesn't exist, create a folder <b>krb5</b> anywhere and create
+                        <li>If the file doesn't exist, create a folder <b>krb5</b> in any path and then create
                             <b>krb5.conf</b>
                             with below configuration.
                             <pre class="code">
@@ -118,8 +122,8 @@
 
                             In the above configuration, the capital bold letter needs to replace with your actual server
                             and realm details. Other configurations like encryption algorithms ticket renew time or
-                            lifetime can adjust as you needed. If you are not sure of the above details, check with
-                            infrastructure team.
+                            lifetime can adjust as you needed. Check with the infrastructure team if you are not sure of
+                            the above details.
 
                         </li>
                         <li>
@@ -148,7 +152,8 @@
                         </pre>
                         </li>
                         <li id="step7">
-                            Initiate the login command to get the ticket and validate the configuration.
+                            Initiate the login command to get the ticket and validate the configuration by using below
+                            command.
                             <pre class="code bg-black text-white">
     $ kinit
                         </pre>
@@ -166,16 +171,20 @@
                     <p>
                         Update <b>application.yml</b> with kafka configuration.
                         <script src="https://gist.github.com/samreddy-patti/1dc01aa5eca3e6c9f0c3e57dc9112309.js?file=application.yml"></script>
-                        Kafka service name should match the service name which is configured in kafka server
-                        and replace your principle name keytab path accordingly.
+                        Kafka service name should match with the Kafka server configuration. Replace your principle name
+                        keytab path accordingly.
                     </p>
                 </section>
                 <section>
                     <h3 id="source">Source code</h3>
                     <p>
-                        Use <a href="https://github.com/samreddy-patti/spring-kafka-kerberos"
-                               target="_blank">git</a>
-                        for complete code.
+                        Create a topic <i>DATA.PRICE</i> and start the Kafka server, Zookeeper and topic consumer before running the
+                        demo. Refer <a
+                            href="https://kafka.apache.org/quickstart" target="_blank">quick start</a> for more
+                        information. Find the <a href="https://github.com/samreddy-patti/spring-kafka-kerberos"
+                                                 target="_blank">git</a>
+                        for complete code. Please note that this code uses command prompt. Use <i>com.techsams.spring.Application</i>
+                        to run the program.
                     </p>
                 </section>
 

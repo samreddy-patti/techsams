@@ -60,7 +60,7 @@
                             document and other information to validate the XML signature.
                         </li>
                         <li>
-                            <b>IDP</b> - Identity Provider (IDP) is a system who is identified the user and issued
+                            <b>IDP</b> - Identity Provider (IDP) is a system who can identify the user and issue the
                             signed SAML document
                         </li>
                         <li>
@@ -139,7 +139,7 @@
                     </p>
                     We can use saml2 core alone, but we need to configure request mapping, filters and authentication,
                     SAML
-                    context and lots of other details with are common for most of the applications. To avoid all these
+                    context and lots of other details which are common for most of the applications. To avoid all these
                     we
                     just use saml dsl which makes our life simple. <i>spring-security-saml-dsl-core</i> contains below
                     request mapping details configured by default.
@@ -211,7 +211,8 @@
                                 </tr>
                             </table>
                             Please note that I am running an application on port 8080 with the http protocol. If you
-                            are using the different port update accordingly. Also note that the property terms may vary from
+                            are using the different port update accordingly. Also note that the property terms may vary
+                            from
                             provider to provider. The configuration looks like below.
                             <p><img src="idp-register.png"></p>
                         </li>
@@ -237,7 +238,8 @@
 keytool -genkey -keyalg RSA -alias onelogin -keystore keystore.jks -storepass secret -validity 360 -keysize 2048
                             </pre>
                         </li>
-                        <li>Place OneLogin <a href="#metadata">metadata</a> file in the resource folder which is downloaded
+                        <li>Place OneLogin <a href="#metadata">metadata</a> file in the resource folder which is
+                            downloaded
                             in the previous section
                         </li>
                         <li>
@@ -248,26 +250,29 @@ keytool -genkey -keyalg RSA -alias onelogin -keystore keystore.jks -storepass se
                                 which contains the SAML 2 request mapping, filter and authentication provider details.
                             </p>
                             <p>
+                                When an application gets the SAML response, first, it will validate the SAML XML.
+                                Validation includes source and destination ids, session time, signature and so on. If
+                                the response XML is valid then SAML DSL will call <i>userDetailsService()</i> method. we
+                                can build our own user service to convert the XML into custom user model.
+                            </p>
+                            <p>
                                 Most important part of the configuration is <b>serviceProvider()</b> section. Usually
                                 when a user successfully logged in, IDP will post a SAML response to <b>/saml/SSO</b> of
                                 service provider. Upon receiving the SAML, a service provider will validate the XML. As
                                 part of the validation, it looks for entity id, destination, audience and other details.
-                            </p>
-                            <p>
                                 For example, In our <a href="#idp_config">IDP configuration</a> section we mentioned
                                 <b>http://localhost:8080</b> domain for all sections. Hence we mentioned localhost, as
                                 part of the SAML response the XML document will contains <b>http://localhost:8080/saml/SSO</b>
                                 as the destination. When a request is posted to localhost instance, it will check for
-                                destination attribute with local instance domain. This is called intended destination.
-                                If both (SAML destination attribute and local instance name) are not matching request
-                                validation will fail.
+                                destination attribute with local instance domain. If both (SAML destination attribute
+                                and local instance name) are not matching request validation will fail.
                             </p>
                             <p> Above example is fine when we are testing in local or with a single instance. But in
-                                production that is not the case. We will have multiple instances on multiple nodes with
+                                production the situation is different. We will have multiple instances on multiple nodes
+                                with
                                 the load balancer. In <a href="#idp_config">IDP configuration</a> we will give the load
                                 balancer domains instead of single node domain. In this case the SAML validation will
-                                fail because the SAML response intended destination is loadbalncer domain, but while
-                                validating the request in the instance it always compare with the present node name.
+                                fail because the SAML response intended destination is loadbalncer domain.
                             </p>
                             <p>
                                 <b>spring-security-saml2-core</b> contains two different SAML context providers to
@@ -275,7 +280,9 @@ keytool -genkey -keyalg RSA -alias onelogin -keystore keystore.jks -storepass se
                                 <b>SAMLContextProviderLB.java</b>. By default <b>spring-security-saml-dsl-core</b> uses
                                 <b>SAMLContextProviderLB.java</b> as a context provider. While validating SAML
                                 intended destination, <b>SAMLContextProviderLB.java</b> uses the configured domain
-                                instead of validating with the SAML processing node domain.
+                                instead of validating with the SAML processing node domain. For LB environment, update
+                                <i>onelogin.sp.protocol</i> and <i>onelogin.sp.host</i> details in
+                                <i>application.yml</i> with load balancer domains.
                             </p>
                         </li>
                         <li>

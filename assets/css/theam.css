@@ -55,10 +55,39 @@ h3 {
     font-size: 1.5rem;
 }
 
+#articleMain {
+    word-spacing: 2px;
+}
+
+#articleMain section {
+    counter-reset: subsection;
+    counter-increment: header;
+}
+
+#article-body {
+    counter-reset: header;
+}
+
 #articleMain h3:before {
-    content: '';
+    content: counter(header);
     border-left: 4px solid #f9aa33;
     padding-left: 8px;
+    padding-right: 8px;
+}
+
+#articleMain h5:before {
+    counter-increment: subsection;
+    content: counter(header) "." counter(subsection);
+    padding-right: 8px;
+}
+
+h5 {
+    margin-top: 8px;
+    font-weight: bold;
+}
+
+#articleMain p, .unstyled, h5, h6 {
+    padding-left: 16px !important;
 }
 
 pre {
@@ -67,11 +96,25 @@ pre {
 
 .link:hover {
     color: #1565C0 !important;
+}
+
+.index-sticky-top .link:hover {
     text-decoration: none !important;
+    border-bottom: 2px solid #f9aa33;
+}
+
+.index-sticky-top ol {
+    padding-left: 15px;
 }
 
 .social i {
-    padding-right: 20px;
+    margin-right: 20px;
+}
+
+.social i:hover {
+    -webkit-box-shadow: 2px 1px 11px 1px rgba(145, 145, 184, 1);
+    -moz-box-shadow: 2px 1px 11px 1px rgba(145, 145, 184, 1);
+    box-shadow: 2px 1px 11px 1px rgba(145, 145, 184, 1);
 }
 
 .col-centered {
@@ -83,7 +126,7 @@ pre {
 }
 
 .profile-intro {
-    background-image: url("../images/tech-logos.png");
+    background-image: url("../images/tech-logos.jpg");
     position: relative;
     background-size: cover;
     z-index: 1;
@@ -101,7 +144,7 @@ pre {
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(0, 0, 0, .6);
+    background: rgba(0, 0, 0, .4);
 }
 
 .bullet {
@@ -145,6 +188,10 @@ pre {
     right: 20px;
 }
 
+.fa-1-5x {
+    font-size: 1.5rem;
+}
+
 .fa-home {
     border-radius: 50%;
 }
@@ -155,9 +202,12 @@ pre {
     padding: 5px;
 }
 
-.blog .menu-link:hover {
-    background-color: #cc7e0a;
+.blog .link:hover {
+    border-bottom: none !important;
+}
 
+.menu-link:hover {
+    background-color: #cc7e0a;
 }
 
 /*.profile {
@@ -169,22 +219,33 @@ pre {
     box-shadow: 0px 0px 0px 2px rgba(212, 212, 212, 0.6);
 }
 
+#tags {
+    height: 300px;
+}
+
 @media only screen and (max-width: 768px) {
     #tags {
         width: 100%;
-        height: 200px;
+
     }
 }
 
 @media only screen and (min-width: 768px) {
     #tags {
         max-width: 765px;
-        height: 200px;
     }
 }
 
 .btn-circle {
     border-radius: 50%;
+}
+
+.bg-profile-border {
+    background-color: #20546b;
+}
+
+.text-primary {
+    color: #20546b !important;
 }
 
 .bg-white {
@@ -197,6 +258,11 @@ pre {
 
 .bg-black {
     background-color: #333333 !important;
+    color: #FFFFFF;
+}
+
+.bg-dark-black {
+    background-color: #000000 !important;
 }
 
 .bg-dark {
@@ -286,10 +352,6 @@ caption {
     cursor: pointer;
 }
 
-.link:hover {
-    text-decoration: underline !important;
-}
-
 @media only screen and (max-width: 768px) {
     .col-4 {
         -ms-flex: 0 0 100%;
@@ -343,7 +405,7 @@ caption {
 
 .img-overlay::after {
     content: '';
-    background-color: rgba(10, 10, 10, 0.3);
+    background-color: rgba(10, 10, 10, 0.2);
     position: absolute;
     top: 0;
     left: 0;
@@ -389,6 +451,17 @@ caption {
 
 .badge {
     font-weight: normal;
+    padding: 8px 12px;
+    border-radius: 60px;
+    margin: 3px 0px;
+}
+
+.badge-primary {
+    background-color: #17a2b8;
+}
+
+.badge-primary:hover {
+    background-color: #dc8d17;
 }
 
 .unstyled {
@@ -407,7 +480,7 @@ caption {
     /*background-color: rgba(63, 81, 181, 0.6);*/
 }
 
-.article-main-title h2 {
+.article-main-title h2, .article-main-title h1 {
     vertical-align: middle;
     display: table-cell;
     font-family: 'Barlow', sans-serif;
@@ -419,4 +492,11 @@ caption {
     max-width: 100%;
 }
 
+.tech-section-header {
+    text-align: center;
+    color: #FFFFFF;
+    background-color: rgb(224, 126, 30);
+    line-height: 40px;
+    vertical-align: middle;
+}
 

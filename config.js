@@ -7,7 +7,7 @@ nativeWindow.config = {
             date: 'Nov 05, 2018',
             imgType: 'svg',
             pathPrefix: '/java/spring/kafka/',
-            tags: ['Java', 'Spring','Kafka','Kerberos']
+            tags: ['Java', 'Spring', 'Kafka', 'Kerberos']
         },
         {
             id: 'spring_sso',
@@ -15,7 +15,15 @@ nativeWindow.config = {
             date: 'Sep 18, 2018',
             imgType: 'svg',
             pathPrefix: '/java/spring/sso/onelogin/',
-            tags: ['Java', 'Spring','SAML','SSO','OneLogin','Okta']
+            tags: ['Java', 'Spring', 'SAML', 'SSO', 'OneLogin', 'Okta']
+        },
+        {
+            id: 'reactvsangular',
+            title: 'React vs Angular',
+            imgType: 'svg',
+            date: 'Aug 16, 2018',
+            pathPrefix: '/js/',
+            tags: ['JS', 'Angular', 'React']
         },
         {
             id: 'angular_dynamic_component',
@@ -26,8 +34,9 @@ nativeWindow.config = {
         },
         {
             id: 'gist_syntax_highlighter',
-            title: 'Blog code syntax highlighter with Gist',
-            date: 'Aug 1, 2018',
+            title: 'Blog code integration with Gist',
+            date: 'Aug 1, 2017',
+            imgType: 'svg',
             pathPrefix: '/git/gist/',
             tags: ['Github', 'Gist']
         },
