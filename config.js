@@ -36,7 +36,7 @@ nativeWindow.config = {
             id: 'gist_syntax_highlighter',
             title: 'Blog code integration with Gist',
             date: 'Aug 1, 2017',
-            imgType: 'svg',
+
             pathPrefix: '/git/gist/',
             tags: ['Github', 'Gist']
         },
