@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Tech Sam</title>
+    <title>Spring Single sign-on with SAML</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="description" content="Spring single sign-on (SSO) using SAML">
+    <meta name="keywords" content="java, spring, springboot, SSO, SAML, single sign on">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -214,13 +217,13 @@
                             are using the different port update accordingly. Also note that the property terms may vary
                             from
                             provider to provider. The configuration looks like below.
-                            <p><img src="idp-register.png"></p>
+                            <p><img alt="Single sign on (SSO) IDP" src="idp-register.png"></p>
                         </li>
                         <li id="metadata">
                             Download the metadata file from OneLogin site. Use <b>More Action</b> link and select <b>SAML
                             metadata</b> link to download the metadata. Copy the downloaded metadata XML into your
                             project resource folder.
-                            <p><img src="idp-metadata.png"></p>
+                            <p><img alt="SSO idp metadata" src="idp-metadata.png"></p>
                         </li>
                     </ol>
                 </section>
@@ -293,7 +296,7 @@ keytool -genkey -keyalg RSA -alias onelogin -keystore keystore.jks -storepass se
                 </section>
                 <section>
                     <h3 id="flow">Process flow</h3>
-                    <img src="single-sign-on-with-spring-saml-sm.svg">
+                    <img alt="sso with Spring and SAML" src="single-sign-on-with-spring-saml-sm.svg">
                 </section>
                 <section>
                     <h3 id="source">Source code</h3>
